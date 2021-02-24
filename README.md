@@ -1,5 +1,7 @@
 [![RohanDalton](https://circleci.com/gh/RohanDalton/dresden.svg?style=shield)](https://circleci.com/gh/RohanDalton/dresden)
 
+----
+
 # Dresden
 
 Dresden is a Python library for profiling your code.
