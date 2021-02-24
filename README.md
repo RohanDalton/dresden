@@ -46,3 +46,10 @@ Or
 with Harry():
     some_func()
 ```
+
+You can also view your profile results using [snakeviz](https://jiffyclub.github.io/snakeviz) if you have it installed in your environment.
+
+```bash
+python cli.py
+```
+
