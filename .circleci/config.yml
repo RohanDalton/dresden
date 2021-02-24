@@ -1,0 +1,8 @@
+version: 2.1
+jobs:
+  working_directory: ~/dresden
+  docker:
+    - image circleci/python:3.6.4
+  steps:
+    - checkout
+    - run: pip install -r requirements.txt
