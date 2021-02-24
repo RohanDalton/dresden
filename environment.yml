@@ -1,0 +1,8 @@
+name: dresden
+channels:
+  - default
+  - conda-forge
+dependencies:
+  - gprof2dot
+  - pydot
+  - python>=3.6
