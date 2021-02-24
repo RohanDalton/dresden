@@ -1,4 +1,5 @@
 import sys
+import webbrowser
 
 import click
 import tornado.ioloop
@@ -21,9 +22,18 @@ def server(host: str, port: int) -> None:
 
             asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 
-        app.listen(port=port, address=host)
+        url = f"http://{host}:{port}/snakeviz/"
         try:
-            click.echo(f"Starting Snakeviz server on http://{host}:{port}/snakeviz/.\nEnter Ctrl-C to exit")
+            browser = webbrowser.get()
+        except webbrowser.Error:
+            click.echo("Unable to find browser")
+        else:
+            browser.open(url, new=2)
+
+        app.listen(port=port, address=host)
+
+        try:
+            click.echo(f"Starting Snakeviz server at {url}.\nEnter Ctrl-C to exit")
             tornado.ioloop.IOLoop.instance().start()
         except KeyboardInterrupt:
             click.echo("Stopping Snakeviz server")
