@@ -32,11 +32,20 @@ class Harry(object):
 
     def _conclude_investigation(self):
         self._profile.disable()
+
+        # TODO: Snakeviz is just a thin wrapper around Tornado. Write own server, that can run separately.
+        # TODO: Directory browsing for comparisons
+        # Dump the stats file for use by snakeviz.
+        temp_dir = get_temp_dir()
+        now = datetime.datetime.now()
+        stats_file = "{name}_{now:%Y%m%d_%H%M%S}.stats".format(name=self._func.__name__, now=now)
+        stats_path = os.path.join(temp_dir, stats_file)
+        self._profile.dump_stats(stats_path)
+
         parser = gprof2dot.PstatsParser(self._profile)
         parser.stats.sort_stats("time")
         prof = parser.parse()
         prof.prune(0.5 / 100.0, 0.1 / 100.0, None, False)
-        now = datetime.datetime.now()
         dot_file = "{name}_{now:%Y%m%d_%H%M%S}.dot".format(name=self._func.__name__, now=now)
         dot_path = os.path.join(get_temp_dir(), dot_file)
         with open(dot_path, "wt") as fh:
