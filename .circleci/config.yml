@@ -1,8 +1,20 @@
-version: 2.1
+version: 2
 jobs:
-  working_directory: ~/dresden
-  docker:
-    - image circleci/python:3.6.4
-  steps:
-    - checkout
-    - run: pip install -r requirements.txt
+  build:
+    working_directory: ~/dresden
+    docker:
+      - image: circleci/python:3.6.4
+    steps:
+      - checkout
+      - restore_cache:
+          key: deps-{{ .Branch }}-{{ checksum "requirements.txt" }}
+      - run:
+          name: Install package dependencies
+          command: |
+            python -m venv venv
+            . venv/bin/activate
+            pip install -r requirements.txt
+      - save_cache:
+          key: deps-{{ .Branch }}-{{ checksum "requirements.txt" }}
+          paths:
+            - venv
